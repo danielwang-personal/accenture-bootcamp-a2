@@ -4,6 +4,7 @@ import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Dialog from '@material-ui/core/Dialog';
 import ResultsPage from './ResultsPage';
+import 'bootstrap/dist/css/boostrap.css'
 
 function App() {
 
