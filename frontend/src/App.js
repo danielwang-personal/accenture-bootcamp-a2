@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo   } from "react";
 import MapGL, {Source, Layer} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import Dialog from '@material-ui/core/Dialog';
+//import Dialog from '@material-ui/core/Dialog';
 import ResultsPage from './ResultsPage';
-import 'bootstrap/dist/css/boostrap.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
