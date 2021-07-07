@@ -4,7 +4,8 @@ import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Dialog from '@material-ui/core/Dialog';
 import ResultsPage from './ResultsPage';
-import 'bootstrap/dist/css/boostrap.css'
+import ResultsItem from "./ResultsItem";
+// import 'bootstrap/dist/css/boostrap.css'
 
 function App() {
 
@@ -62,13 +63,18 @@ function App() {
       "Address": "12 woolies st",
       "lat": 1.009,
       "long": 2,
-      "Popularity": 100
+      "Popularity": 90
+    }, {
+      "Name": "Coles",
+      "Address": "24 coles st",
+      "lat": 1.009,
+      "long": 2,
+      "Popularity": 50
     }]
   }
 
   const updateSupermarkets = (data) => {
     setSupermarkets(data)
-
   }
 
   var getNearbySupermarkets2 = () => {
@@ -77,9 +83,7 @@ function App() {
       return
     }
     let data = sampleData.results;
-    console.log(supermarkets)
     updateSupermarkets(data)
-    console.log(supermarkets)
   }
 
   const dataValues = CovidCases
@@ -98,9 +102,9 @@ function App() {
       }}/>
       <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
       {
-        for (int i = 1; i < supermarkets.length; i++;) {
-
-        }
+        supermarkets.map((value, index) => (
+          <ResultsItem name={value.Name} popularity={value.Popularity} address={value.Address}/>
+        ))
       }
       {dataValues && (
           <Source type="geojson" data={dataValues}>
