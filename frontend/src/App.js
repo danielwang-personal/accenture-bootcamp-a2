@@ -38,8 +38,6 @@ function App() {
     fetch('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
       .then(resp => resp.json())
       .then(json => {
-        // Note: In a real application you would do a validation of JSON data before doing anything with it,
-        // but for demonstration purposes we ingore this part here and just trying to select needed data...
         const features = json.features;
         const endTime = features[0].properties.time;
         const startTime = features[features.length - 1].properties.time;
