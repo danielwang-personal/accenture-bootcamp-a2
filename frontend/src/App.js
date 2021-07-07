@@ -37,7 +37,7 @@ function App() {
         setCovidCases(data);
       });
 
-    getNearbySupermarkets2();
+    // getNearbySupermarkets2();
   }, []);
 
   // const getNearbySupermarkets = async () => {
@@ -104,7 +104,7 @@ function App() {
       <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
       {
         supermarkets.map((value, index) => (
-          <ResultsItem name={value.Name} popularity={value.Popularity} address={value.Address}/>
+          <ResultsItem key={index} name={value.Name} popularity={value.Popularity} address={value.Address}/>
         ))
       }
       {dataValues && (
