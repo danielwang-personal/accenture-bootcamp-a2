@@ -96,7 +96,11 @@ function App() {
         setPostcode(e.target.value);
       }}/>
       <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
-      <ResultsPage supermarkets={supermarkets} setSupermarkets={setSupermarkets}/>
+      {
+        for (int i = 1; i < supermarkets.length; i++;) {
+
+        }
+      }
       {dataValues && (
           <Source type="geojson" data={dataValues}>
             <Layer {...heatmapLayer} />
