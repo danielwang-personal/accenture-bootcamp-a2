@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo   } from "react";
 import MapGL, {Source, Layer} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 function filterFeaturesByDay(featureCollection, time) {
   const date = new Date(time);
@@ -32,6 +33,8 @@ function App() {
   const [timeRange, setTimeRange] = useState([0, 0]);
   const [selectedTime, selectTime] = useState(0);
   const [earthquakes, setEarthQuakes] = useState(null);
+  const [postcode, setPostcode] = useState("2000");
+  const [supermarkets, setSupermarkets] = useState([]);
 
   useEffect(() => {
     /* global fetch */
@@ -52,6 +55,26 @@ function App() {
     return allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime);
   }, [earthquakes, allDays, selectedTime]);
 
+  const url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=supermarket+near+2220&key=AIzaSyDkrXYeR2UBNKY2Vn3-jQoCmTKsj5I-at0'
+
+  const getSupermarkets = async () => {
+    // alert(postcode);
+    await fetch(url, {
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin':'*',
+        'Accept':'*/*'
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data)
+      })
+
+  
+    // takes in postcode -> should return list of supermarkets, or update the state to have the list!!
+  }
+
   return (
     <MapGL {...viewport} 
     mapboxApiAccessToken="pk.eyJ1IjoiZGFuaWVsLXdhbmcxMyIsImEiOiJja3FyazNqNWozMDRqMm9tbHJrNXF6MXR3In0.87deKFP-tRAVQYv0ftaFwg"
@@ -60,6 +83,11 @@ function App() {
       setViewport(viewport)
     }}
     >
+      <h1>{postcode}</h1>
+      <input type="text" onChange={(e) => {
+        setPostcode(e.target.value);
+      }}/>
+      <button onClick={getSupermarkets}>Submit Postcode</button>
       {data && (
         
           <Source type="geojson" data={data}>
