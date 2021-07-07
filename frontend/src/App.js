@@ -3,27 +3,27 @@ import MapGL, {Source, Layer} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-function filterFeaturesByDay(featureCollection, time) {
-  const date = new Date(time);
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-  const features = featureCollection.features.filter(feature => {
-    const featureDate = new Date(feature.properties.time);
-    return (
-      featureDate.getFullYear() === year &&
-      featureDate.getMonth() === month &&
-      featureDate.getDate() === day
-    );
-  });
-  return {type: 'FeatureCollection', features};
-}
+// function filterFeaturesByDay(featureCollection, time) {
+//   const date = new Date(time);
+//   const year = date.getFullYear();
+//   const month = date.getMonth();
+//   const day = date.getDate();
+//   const features = featureCollection.features.filter(feature => {
+//     const featureDate = new Date(feature.properties.time);
+//     return (
+//       featureDate.getFullYear() === year &&
+//       featureDate.getMonth() === month &&
+//       featureDate.getDate() === day
+//     );
+//   });
+//   return {type: 'FeatureCollection', features};
+// }
 
 function App() {
 
   const [viewport, setViewport] = useState({
-    latitude: -33.8688 ,
-    longitude:  151.2093,
+    latitude: -37.8136,
+    longitude: 144.9631,
     width: "100vw",
     height: "100vh",
     zoom: 12
@@ -32,28 +32,38 @@ function App() {
   const [allDays, useAllDays] = useState(true);
   const [timeRange, setTimeRange] = useState([0, 0]);
   const [selectedTime, selectTime] = useState(0);
-  const [earthquakes, setEarthQuakes] = useState(null);
+  const [CovidCases, setCovidCases] = useState(null);
   const [postcode, setPostcode] = useState("2000");
   const [supermarkets, setSupermarkets] = useState([]);
 
   useEffect(() => {
     /* global fetch */
-    fetch('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
+    //http://127.0.0.1:5000/all
+    fetch('http://127.0.0.1:5000/all', {
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin':'*',
+        'Accept':'*/*'
+      }
+    })
       .then(resp => resp.json())
       .then(json => {
         const features = json.features;
-        const endTime = features[0].properties.time;
-        const startTime = features[features.length - 1].properties.time;
+        // const endTime = features[0].properties.time;
+        // const startTime = features[features.length - 1].properties.time;
 
-        setTimeRange([startTime, endTime]);
-        setEarthQuakes(json);
-        selectTime(endTime);
+        // setTimeRange([startTime, endTime]);
+        setCovidCases(json);
+        console.log(json)
+        // selectTime(endTime);
       });
   }, []);
 
-  const data = useMemo(() => {
-    return allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime);
-  }, [earthquakes, allDays, selectedTime]);
+  // const data = useMemo(() => {
+  //   return allDays ? CovidCases : filterFeaturesByDay(CovidCases, selectedTime);
+  // }, [CovidCases, allDays, selectedTime]);
+
+  const data = CovidCases
 
   const url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=supermarket+near+2220&key=AIzaSyDkrXYeR2UBNKY2Vn3-jQoCmTKsj5I-at0'
 
@@ -91,7 +101,6 @@ function App() {
       {data && (
         
           <Source type="geojson" data={data}>
-            <Layer {...unclusteredPointLayer} />
             <Layer {...heatmapLayer} />
           </Source>
         )}

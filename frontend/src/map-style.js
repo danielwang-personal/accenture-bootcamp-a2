@@ -1,11 +1,11 @@
-const MAX_ZOOM_LEVEL = 9;
+const MAX_ZOOM_LEVEL = 20;
 
 export const heatmapLayer = {
   maxzoom: MAX_ZOOM_LEVEL,
   type: 'heatmap',
   paint: {
-    // Increase the heatmap weight based on frequency and property magnitude
-    'heatmap-weight': ['interpolate', ['linear'], ['get', 'mag'], 0, 0, 6, 1],
+    // Increase the heatmap weight based on frequency and property frequencynitude
+    'heatmap-weight': ['interpolate', ['linear'], ['get', 'frequency'], 0, 0, 6, 1],
     // Increase the heatmap color weight weight by zoom level
     // heatmap-intensity is a multiplier on top of heatmap-weight
     'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, MAX_ZOOM_LEVEL, 3],
@@ -32,7 +32,7 @@ export const heatmapLayer = {
     // Adjust the heatmap radius by zoom level
     'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, MAX_ZOOM_LEVEL, 20],
     // Transition from heatmap to circle layer by zoom level
-    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 9, 0]
+    // 'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 9, 0]
   }
 };
 
@@ -43,21 +43,21 @@ export const unclusteredPointLayer = {
     source: 'earthquakes',
     'minzoom': 7,
     'paint': {
-        // Size circle radius by earthquake magnitude and zoom level
+        // Size circle radius by earthquake frequencynitude and zoom level
         'circle-radius': [
             'interpolate',
             ['linear'],
             ['zoom'],
             7,
-            ['interpolate', ['linear'], ['get', 'mag'], 1, 1, 6, 4],
+            ['interpolate', ['linear'], ['get', 'frequency'], 1, 1, 6, 4],
             16,
-            ['interpolate', ['linear'], ['get', 'mag'], 1, 5, 6, 50]
+            ['interpolate', ['linear'], ['get', 'frequency'], 1, 5, 6, 50]
         ],
-        // Color circle by earthquake magnitude
+        // Color circle by earthquake frequencynitude
         'circle-color': [
             'interpolate',
             ['linear'],
-            ['get', 'mag'],
+            ['get', 'frequency'],
             1,
             'rgba(33,102,172,0)',
             2,
