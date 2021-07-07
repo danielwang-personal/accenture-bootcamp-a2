@@ -3,7 +3,7 @@ import MapGL, {Source, Layer} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Dialog from '@material-ui/core/Dialog';
-import resultsPage from './resultsPage';
+import ResultsPage from './ResultsPage';
 
 function App() {
 
@@ -33,10 +33,9 @@ function App() {
       .then(data => {
         setCovidCases(data);
       });
+
+    getNearbySupermarkets2();
   }, []);
-
-
-  const url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=supermarket+near+2220&key=AIzaSyDkrXYeR2UBNKY2Vn3-jQoCmTKsj5I-at0'
 
   // const getNearbySupermarkets = async () => {
   //   if (postcode === '' || postcode === null) {
@@ -57,8 +56,8 @@ function App() {
   // }
 
   const sampleData = {
-    'results': [{
-      'Name': "Woolworths",
+    "results": [{
+      "Name": "Woolworths",
       "Address": "12 woolies st",
       "lat": 1.009,
       "long": 2,
@@ -66,20 +65,20 @@ function App() {
     }]
   }
 
-  const getNearbySupermarkets2 = async () => {
+  const updateSupermarkets = (data) => {
+    setSupermarkets(data)
+
+  }
+
+  var getNearbySupermarkets2 = () => {
     if (postcode === '' || postcode === null) {
       alert("please enter a postcode")
       return
     }
-    alert(sampleData.results)
-    let data = sampleData['results'];
-    console.log(data)
-    alert(data.length)
-    alert("hi")
-    alert(data.type)
-    setSupermarkets(data)
-    alert(supermarkets.length)
-    alert(supermarkets[0].Popularity)
+    let data = sampleData.results;
+    console.log(supermarkets)
+    updateSupermarkets(data)
+    console.log(supermarkets)
   }
 
   const dataValues = CovidCases
@@ -97,6 +96,7 @@ function App() {
         setPostcode(e.target.value);
       }}/>
       <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
+      <ResultsPage supermarkets={supermarkets} setSupermarkets={setSupermarkets}/>
       {dataValues && (
           <Source type="geojson" data={dataValues}>
             <Layer {...heatmapLayer} />
