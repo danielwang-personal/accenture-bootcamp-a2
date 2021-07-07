@@ -15,7 +15,7 @@ function App() {
     longitude: 144.9631,
     width: "100vw",
     height: "100vh",
-    zoom: 12
+    zoom: 8
   })
 
   const [CovidCases, setCovidCases] = useState(null);
@@ -60,18 +60,31 @@ function App() {
 
   const sampleData = {
     "results": [{
-      "Name": "Woolworths",
-      "Address": "12 woolies st",
+      "Name": "Woolworths Lygon Court",
+      "Address": " Lygon Court, 368 - 380 Lygon St, Carlton VIC 3053",
       "lat": 1.009,
       "long": 2,
       "Popularity": 90
     }, {
-      "Name": "Coles",
-      "Address": "24 coles st",
+      "Name": "Coles Local Fitzroy",
+      "Address": "95-103 Johnston St, Fitzroy VIC 3065",
+      "lat": 1.009,
+      "long": 2,
+      "Popularity": 50
+    },{
+      "Name": "ALDI Melbourne CBD",
+      "Address": "501 Swanston St, Melbourne VIC 3000",
       "lat": 1.009,
       "long": 2,
       "Popularity": 50
     }]
+  }
+
+  const viewPortCarlton = {latitude: -37.8001,
+    longitude: 144.9671,
+    width: "100vw",
+    height: "100vh",
+    zoom: 14
   }
 
   const updateSupermarkets = (data) => {
@@ -85,6 +98,7 @@ function App() {
     }
     let data = sampleData.results;
     updateSupermarkets(data)
+    setViewport(viewPortCarlton)
   }
 
   const dataValues = CovidCases
