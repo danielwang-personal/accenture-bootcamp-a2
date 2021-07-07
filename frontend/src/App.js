@@ -2,22 +2,8 @@ import React, { useState, useEffect, useMemo   } from "react";
 import MapGL, {Source, Layer} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-
-// function filterFeaturesByDay(featureCollection, time) {
-//   const date = new Date(time);
-//   const year = date.getFullYear();
-//   const month = date.getMonth();
-//   const day = date.getDate();
-//   const features = featureCollection.features.filter(feature => {
-//     const featureDate = new Date(feature.properties.time);
-//     return (
-//       featureDate.getFullYear() === year &&
-//       featureDate.getMonth() === month &&
-//       featureDate.getDate() === day
-//     );
-//   });
-//   return {type: 'FeatureCollection', features};
-// }
+import Dialog from '@material-ui/core/Dialog';
+import resultsPage from './resultsPage';
 
 function App() {
 
@@ -29,9 +15,6 @@ function App() {
     zoom: 12
   })
 
-  const [allDays, useAllDays] = useState(true);
-  const [timeRange, setTimeRange] = useState([0, 0]);
-  const [selectedTime, selectTime] = useState(0);
   const [CovidCases, setCovidCases] = useState(null);
   const [postcode, setPostcode] = useState("2000");
   const [supermarkets, setSupermarkets] = useState([]);
@@ -47,43 +30,59 @@ function App() {
       }
     })
       .then(resp => resp.json())
-      .then(json => {
-        const features = json.features;
-        // const endTime = features[0].properties.time;
-        // const startTime = features[features.length - 1].properties.time;
-
-        // setTimeRange([startTime, endTime]);
-        setCovidCases(json);
-        console.log(json)
-        // selectTime(endTime);
+      .then(data => {
+        setCovidCases(data);
       });
   }, []);
 
-  // const data = useMemo(() => {
-  //   return allDays ? CovidCases : filterFeaturesByDay(CovidCases, selectedTime);
-  // }, [CovidCases, allDays, selectedTime]);
-
-  const data = CovidCases
 
   const url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=supermarket+near+2220&key=AIzaSyDkrXYeR2UBNKY2Vn3-jQoCmTKsj5I-at0'
 
-  const getSupermarkets = async () => {
-    // alert(postcode);
-    await fetch(url, {
-      mode: 'cors',
-      headers: {
-        'Access-Control-Allow-Origin':'*',
-        'Accept':'*/*'
-      }
-    })
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data)
-      })
+  // const getNearbySupermarkets = async () => {
+  //   if (postcode === '' || postcode === null) {
+  //     alert("please enter a postcode")
+  //     return
+  //   }
+  //   const res = await fetch(url, {
+  //     mode: 'cors',
+  //     headers: {
+  //       'Access-Control-Allow-Origin':'*',
+  //       'Accept':'*/*'
+  //     }
+  //   });
+  //   setSupermarkets(await res.json());
 
   
     // takes in postcode -> should return list of supermarkets, or update the state to have the list!!
+  // }
+
+  const sampleData = {
+    'results': [{
+      'Name': "Woolworths",
+      "Address": "12 woolies st",
+      "lat": 1.009,
+      "long": 2,
+      "Popularity": 100
+    }]
   }
+
+  const getNearbySupermarkets2 = async () => {
+    if (postcode === '' || postcode === null) {
+      alert("please enter a postcode")
+      return
+    }
+    alert(sampleData.results)
+    let data = sampleData['results'];
+    console.log(data)
+    alert(data.length)
+    alert("hi")
+    alert(data.type)
+    setSupermarkets(data)
+    alert(supermarkets.length)
+    alert(supermarkets[0].Popularity)
+  }
+
+  const dataValues = CovidCases
 
   return (
     <MapGL {...viewport} 
@@ -97,16 +96,14 @@ function App() {
       <input type="text" onChange={(e) => {
         setPostcode(e.target.value);
       }}/>
-      <button onClick={getSupermarkets}>Submit Postcode</button>
-      {data && (
-        
-          <Source type="geojson" data={data}>
+      <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
+      {dataValues && (
+          <Source type="geojson" data={dataValues}>
             <Layer {...heatmapLayer} />
           </Source>
         )}
         
     </MapGL>
-    
 
   );
 }
