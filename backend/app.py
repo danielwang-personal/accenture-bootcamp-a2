@@ -1,14 +1,26 @@
-from flask import Flask
-import requests
-import pandas as pd
-
+import datetime
 import urllib
+import pandas as pd
+from integration_service import to_geojson
+from retrieval_service import retrieve_df
+from flask import Flask
 
-csv_url = "https://data.nsw.gov.au/data/dataset/aefcde60-3b0c-4bc0-9af1-6fe652944ec2/resource/21304414-1ff1-4243-a5d2-f52778048b29/download/confirmed_cases_table1_location.csv"
+curr_date = datetime.date.today()
+csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwXSqlP56q78lZKxc092o6UuIyi7VqOIQj6RM4QmlVPgtJZfbgzv0a3X7wQQkhNu8MFolhVwMy4VnF/pub?gid=0&single=true&output=csv"
 data = pd.read_csv(urllib.request.urlopen(csv_url))
+data = data[data['postcode'] < 9000]
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return f"<p>{str(data)}</p>"
+    return f"<pre>{str(data)}</pre>"
+
+@app.route("/all")
+def retrieve_all():
+    out_df = retrieve_df(data)
+    return to_geojson(out_df)
+
+@app.route("/getPopularity")
+def calculate_popularity(supermarket: str):
+    pass
