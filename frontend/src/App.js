@@ -66,20 +66,20 @@ function App() {
     "results": [{
       "Name": "Woolworths Lygon Court",
       "Address": " Lygon Court, 368 - 380 Lygon St, Carlton VIC 3053",
-      "lat": -37.8136,
-      "long": 144.9631,
+      "lat": -37.7983,
+      "long": 144.9686,
       "Popularity": 90
     }, {
       "Name": "Coles Local Fitzroy",
       "Address": "95-103 Johnston St, Fitzroy VIC 3065",
-      "lat": 1.009,
-      "long": 2,
+      "lat": -37.7982,
+      "long": 144.9780,
       "Popularity": 50
     },{
       "Name": "ALDI Melbourne CBD",
       "Address": "501 Swanston St, Melbourne VIC 3000",
-      "lat": 1.009,
-      "long": 2,
+      "lat": -37.8074,
+      "long": 144.9622,
       "Popularity": 50
     }]
   }
@@ -136,7 +136,7 @@ function App() {
       }
       {
         supermarkets.map((value, index) => (
-          <Marker latitude={value.lat} longitude={value.long} offsetLeft={-20} offsetTop={-10}>
+          <Marker latitude={value.lat} longitude={value.long}>
             <svg
               height={SIZE}
               viewBox="0 0 24 24"
