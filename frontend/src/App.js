@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo   } from "react";
-import MapGL, {Source, Layer} from "react-map-gl";
+import MapGL, {Source, Layer, Marker} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 //import Dialog from '@material-ui/core/Dialog';
-import ResultsPage from './ResultsPage';
 import ResultsItem from "./ResultsItem";
 // import 'bootstrap/dist/css/boostrap.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +14,7 @@ function App() {
     longitude: 144.9631,
     width: "100vw",
     height: "100vh",
-    zoom: 12
+    zoom: 8
   })
 
   const [CovidCases, setCovidCases] = useState(null);
@@ -60,18 +59,31 @@ function App() {
 
   const sampleData = {
     "results": [{
-      "Name": "Woolworths",
-      "Address": "12 woolies st",
+      "Name": "Woolworths Lygon Court",
+      "Address": " Lygon Court, 368 - 380 Lygon St, Carlton VIC 3053",
       "lat": 1.009,
       "long": 2,
       "Popularity": 90
     }, {
-      "Name": "Coles",
-      "Address": "24 coles st",
+      "Name": "Coles Local Fitzroy",
+      "Address": "95-103 Johnston St, Fitzroy VIC 3065",
+      "lat": 1.009,
+      "long": 2,
+      "Popularity": 50
+    },{
+      "Name": "ALDI Melbourne CBD",
+      "Address": "501 Swanston St, Melbourne VIC 3000",
       "lat": 1.009,
       "long": 2,
       "Popularity": 50
     }]
+  }
+
+  const viewPortCarlton = {latitude: -37.8001,
+    longitude: 144.9671,
+    width: "100vw",
+    height: "100vh",
+    zoom: 14
   }
 
   const updateSupermarkets = (data) => {
@@ -85,6 +97,7 @@ function App() {
     }
     let data = sampleData.results;
     updateSupermarkets(data)
+    setViewport(viewPortCarlton)
   }
 
   const dataValues = CovidCases
@@ -106,8 +119,15 @@ function App() {
       </div>
       {
         supermarkets.map((value, index) => (
-          <ResultsItem key={index} name={value.Name} popularity={value.Popularity} address={value.Address}/>
+          <ResultsItem 
+            key={index} 
+            name={value.Name} 
+            popularity={value.Popularity} 
+            address={value.Address}
+            latitude={value.lat}
+            longitude={value.long}/>
         ))
+        
       }
       {dataValues && (
           <Source type="geojson" data={dataValues}>
