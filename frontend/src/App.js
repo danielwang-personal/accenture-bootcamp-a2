@@ -5,6 +5,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-au
 //import Dialog from '@material-ui/core/Dialog';
 import ResultsItem from "./ResultsItem";
 import Card from 'react-bootstrap/Card'
+import {Navbar, Nav, Button, NavDropdown, Form, FormControl} from 'react-bootstrap'
 // import 'bootstrap/dist/css/boostrap.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -111,19 +112,19 @@ function App() {
   return (
     <MapGL {...viewport} 
     mapboxApiAccessToken="pk.eyJ1IjoiZGFuaWVsLXdhbmcxMyIsImEiOiJja3FyazNqNWozMDRqMm9tbHJrNXF6MXR3In0.87deKFP-tRAVQYv0ftaFwg"
-    mapStyle="mapbox://styles/daniel-wang13/ckqrl5x94en2v17no8natcaj9"
+    mapStyle="mapbox://styles/daniel-wang13/ckqu8qaco1hda17qg5kzqympq"
     onViewportChange={viewport =>  {
       setViewport(viewport)
     }}
     >
-      <div class="container">
-      <div class="row px-5 pt-5">
-        <div class="col-md-5 px-0">
-          <h1 style={{ fontSize: "2.5rem", color: "white", fontWeight: "600" }}>Covid at a Glance</h1>
+      <div class="container-fluid">
+      <div class="row px-5 pt-5" style={{backgroundColor: "#ae017e"}}>
+        <div class="col-md-4 px-0">
+          <h1 style={{ fontSize: "1.8rem", color: "#fff7f3", fontWeight: "600" }}>Covid at a Glance</h1>
         </div>
       </div>
       <div class="row px-5 py-2">
-        <div class="col-md-5 px-0">
+        <div class="col-md-4 px-0">
             <Card classstyle={{ width: '18rem' , backgroundColor:'white', zIndex: 1000}}>
                 <Card.Body>
                   <Card.Text>
@@ -135,10 +136,10 @@ function App() {
         </div>
       </div>
       <div class="row px-5 py-2">
-          <input type="text" placeholder="Enter postcode" class="form-control col-md-4" onChange={(e) => {
+          <input type="text" placeholder="Enter postcode" style={{ color: "black"}} class="form-control col-md-3" onChange={(e) => {
             setPostcode(e.target.value);
           }} />
-          <button onClick={getNearbySupermarkets2} class="form-control col-md-1">Submit Postcode</button>
+          <button onClick={getNearbySupermarkets2} style={{backgroundColor:"#ae017e", color: "#fff7f3"}} class="form-control col-md-1">Submit</button>
       </div>
       {
         supermarkets.map((value, index) => (
