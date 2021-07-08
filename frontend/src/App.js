@@ -4,6 +4,7 @@ import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 //import Dialog from '@material-ui/core/Dialog';
 import ResultsItem from "./ResultsItem";
+import Card from 'react-bootstrap/Card'
 // import 'bootstrap/dist/css/boostrap.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -114,13 +115,27 @@ function App() {
     onViewportChange={viewport =>  {
       setViewport(viewport)
     }}
-    class="container"
     >
-      <div class="row px-5 py-3" >
-        <h1 style={{ fontSize: "2.5rem", color: "white", fontWeight: "600" }}>Covid at a Glance</h1>
+      <div class="container">
+      <div class="row px-5 pt-5">
+        <div class="col-md-5 px-0">
+          <h1 style={{ fontSize: "2.5rem", color: "white", fontWeight: "600" }}>Covid at a Glance</h1>
+        </div>
       </div>
       <div class="row px-5 py-2">
-          <input type="text" placeholder="Enter postcode" class="form-control col-md-3" onChange={(e) => {
+        <div class="col-md-5 px-0">
+            <Card classstyle={{ width: '18rem' , backgroundColor:'white', zIndex: 1000}}>
+                <Card.Body>
+                  <Card.Text>
+                    <span class="text-muted">COVID at a Glance brings together government COVID data and local supermarket capacity data to help you shop safely.</span> <br/>
+                    <span class="text-muted">Enter your postcode below to find the safest places to shop:</span>
+                  </Card.Text>
+                </Card.Body>
+            </Card>
+        </div>
+      </div>
+      <div class="row px-5 py-2">
+          <input type="text" placeholder="Enter postcode" class="form-control col-md-4" onChange={(e) => {
             setPostcode(e.target.value);
           }} />
           <button onClick={getNearbySupermarkets2} class="form-control col-md-1">Submit Postcode</button>
@@ -137,6 +152,7 @@ function App() {
         ))
         
       }
+      </div>
       {
         supermarkets.map((value, index) => (
           <Marker latitude={value.lat} longitude={value.long}>

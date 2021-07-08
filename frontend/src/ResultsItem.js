@@ -6,7 +6,8 @@ import Marker, {Source, Layer} from "react-map-gl";
 export default function ResultsItem({ name, popularity, address }) {
     return (
         <div className='supermarket-result row px-5 py-1'>
-            <Card classstyle={{ width: '18rem' , backgroundColor:'white'}}>
+            <div class="col-md-5 px-0">
+            <Card classstyle={{ width: '18rem' , backgroundColor:'white', zIndex: 1000}}>
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{address}</Card.Subtitle>
@@ -18,6 +19,7 @@ export default function ResultsItem({ name, popularity, address }) {
             {/* <Marker latitude={-37.8136} longitude={144.9631} offsetLeft={-20} offsetTop={-10}>
                 <div>You are here</div>
             </Marker> */}
+            </div>
         </div>
     )
 }
