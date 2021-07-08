@@ -7,6 +7,11 @@ import ResultsItem from "./ResultsItem";
 // import 'bootstrap/dist/css/boostrap.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
+  c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
+  C20.1,15.8,20.2,15.8,20.2,15.7z`;
+const SIZE = 20;
+
 function App() {
 
   const [viewport, setViewport] = useState({
@@ -61,8 +66,8 @@ function App() {
     "results": [{
       "Name": "Woolworths Lygon Court",
       "Address": " Lygon Court, 368 - 380 Lygon St, Carlton VIC 3053",
-      "lat": 1.009,
-      "long": 2,
+      "lat": -37.8136,
+      "long": 144.9631,
       "Popularity": 90
     }, {
       "Name": "Coles Local Fitzroy",
@@ -128,6 +133,24 @@ function App() {
             longitude={value.long}/>
         ))
         
+      }
+      {
+        supermarkets.map((value, index) => (
+          <Marker latitude={value.lat} longitude={value.long} offsetLeft={-20} offsetTop={-10}>
+            <svg
+              height={SIZE}
+              viewBox="0 0 24 24"
+              style={{
+                cursor: 'pointer',
+                fill: '#d00',
+                stroke: 'none',
+                transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
+              }}
+            >
+              <path d={ICON} />
+            </svg>
+          </Marker>
+        ))
       }
       {dataValues && (
           <Source type="geojson" data={dataValues}>
