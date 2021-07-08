@@ -116,7 +116,10 @@ function App() {
     }}
     class="container"
     >
-      <div class="row p-5">
+      <div class="row px-5 py-3">
+        <h1>Covid at a Glance</h1>
+      </div>
+      <div class="row px-5 py-2">
           <input type="text" class="form-control col-md-3" onChange={(e) => {
             setPostcode(e.target.value);
           }}/>
