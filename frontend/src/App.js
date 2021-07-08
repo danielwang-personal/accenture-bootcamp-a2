@@ -116,8 +116,11 @@ function App() {
     }}
     class="container"
     >
-      <div class="row p-5">
-          <input type="text" class="form-control col-md-3" onChange={(e) => {
+      <div class="row px-5 py-3" >
+        <h1 style={{ fontSize: "2.5rem", color: "white", fontWeight: "600" }}>Covid at a Glance</h1>
+      </div>
+      <div class="row px-5 py-2">
+          <input type="text" placeholder="Enter postcode" class="form-control col-md-3" onChange={(e) => {
             setPostcode(e.target.value);
           }} />
           <button onClick={getNearbySupermarkets2} class="form-control col-md-1">Submit Postcode</button>
