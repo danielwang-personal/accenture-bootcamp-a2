@@ -119,7 +119,7 @@ function App() {
       <div class="row p-5">
           <input type="text" class="form-control col-md-3" onChange={(e) => {
             setPostcode(e.target.value);
-          }}/>
+          }} />
           <button onClick={getNearbySupermarkets2} class="form-control col-md-1">Submit Postcode</button>
       </div>
       {
