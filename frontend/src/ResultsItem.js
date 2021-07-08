@@ -1,5 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
+import Marker, {Source, Layer} from "react-map-gl";
+
 
 export default function ResultsItem({ name, popularity, address }) {
     return (
@@ -13,6 +15,9 @@ export default function ResultsItem({ name, popularity, address }) {
                     </Card.Text>
                 </Card.Body>
             </Card>
+            {/* <Marker latitude={-37.8136} longitude={144.9631} offsetLeft={-20} offsetTop={-10}>
+                <div>You are here</div>
+            </Marker> */}
         </div>
     )
 }
