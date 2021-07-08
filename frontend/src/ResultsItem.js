@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card'
 
 export default function ResultsItem({ name, popularity, address }) {
     return (
-        <div className='supermarket-result'>
+        <div class="row px-5 py-1" className='supermarket-result'>
             <Card style={{ width: '18rem' , backgroundColor:'white'}}>
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
