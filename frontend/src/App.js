@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo   } from "react";
-import MapGL, {Source, Layer} from "react-map-gl";
+import MapGL, {Source, Layer, Marker} from "react-map-gl";
 import {heatmapLayer, unclusteredPointLayer} from './map-style';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 //import Dialog from '@material-ui/core/Dialog';
-import ResultsPage from './ResultsPage';
 import ResultsItem from "./ResultsItem";
 // import 'bootstrap/dist/css/boostrap.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -118,8 +117,15 @@ function App() {
       <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
       {
         supermarkets.map((value, index) => (
-          <ResultsItem key={index} name={value.Name} popularity={value.Popularity} address={value.Address}/>
+          <ResultsItem 
+            key={index} 
+            name={value.Name} 
+            popularity={value.Popularity} 
+            address={value.Address}
+            latitude={value.lat}
+            longitude={value.long}/>
         ))
+        
       }
       {dataValues && (
           <Source type="geojson" data={dataValues}>
