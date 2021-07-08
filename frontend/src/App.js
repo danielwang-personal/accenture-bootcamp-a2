@@ -96,12 +96,14 @@ function App() {
     onViewportChange={viewport =>  {
       setViewport(viewport)
     }}
+    class="container"
     >
-      <h1>{postcode}</h1>
-      <input type="text" onChange={(e) => {
-        setPostcode(e.target.value);
-      }}/>
-      <button onClick={getNearbySupermarkets2}>Submit Postcode</button>
+      <div class="row p-5">
+          <input type="text" class="form-control col-md-3" onChange={(e) => {
+            setPostcode(e.target.value);
+          }}/>
+          <button onClick={getNearbySupermarkets2} class="form-control col-md-1">Submit Postcode</button>
+      </div>
       {
         supermarkets.map((value, index) => (
           <ResultsItem key={index} name={value.Name} popularity={value.Popularity} address={value.Address}/>
@@ -112,6 +114,7 @@ function App() {
             <Layer {...heatmapLayer} />
           </Source>
         )}
+
         
     </MapGL>
 
